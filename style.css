@@ -13,3 +13,8 @@ p {
   font-family: segoe ui;
   font-size: 20;
 }
+.div-1 {
+background-color: #FF0000;
+padding: 10px 15px 8px 15px;
+line-height: 120%;
+}
