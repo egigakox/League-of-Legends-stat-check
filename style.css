@@ -5,16 +5,25 @@ body{
 h1 {
   color: purple;
   text-align: center;
-  font-family: segoe ui;
+  font-family: Helvetica;
   font-weight: bolder;
 }
 
 p {
-  font-family: segoe ui;
+  font-family: Helvetica;
   font-size: 20;
 }
 .div-1 {
 background-color: #FF0000;
 padding: 10px 15px 8px 15px;
 line-height: 120%;
+}
+.soloqstats {
+display: none;
+}
+.flexqstats {
+display: none;
+}
+.error {
+  display: none;
 }

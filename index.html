@@ -29,32 +29,39 @@
       Account Level: <span id="level"></span><br>
     </p>
 
-    </p>
-    <p id="rangasoloq" style="visibility: hidden">
+
+    <div class="soloqstats" id="soloqstats">
       <b>Solo Queue</b><br>
       Rank: <span id="ranksoloq"></span><br>
       LP: <span id="lp"></span><br>
       Wins: <span id="winy"></span> Losses:<span id="losy"></span><br>
       Win ratio: <span id="wr"></span><br>
-    </p>
-      <p id="error" style="visibility: hidden">
+    </div>
+    <div class="error" id="error">
         <span id="blad"></span>
-      <p id="rangaflex" style="visibility: hidden">
+      </div>
+
+      <div class="flexqstats" id="flexqstats">
       <b>Flex Queue</b><br>
       Rank: <span id="rankflex"></span><br>
       LP: <span id="lpflex"></span><br>
       Wins: <span id="winyflex"></span> Losses:<span id="losyflex"></span><br>
       Win ratio: <span id="wrflex"></span>
-    </p>
+  </div>
 
     <script>
-    const apikey = "RGAPI-";
+    const apikey = "RGAPI-b3cf6645-60c2-494b-9f56-2c431c751bea";
     var id;
     var server;
     var nick;
         async function getinfo() {
           nick = document.getElementById("nickname").value;
           server = document.getElementById('server').value;
+          //koks
+          document.getElementById("error").style.display = "none";
+          document.getElementById("soloqstats").style.display = "none";
+          document.getElementById("flexqstats").style.display = "none";
+
 
         var info_url = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${nick}?api_key=${apikey}`;
         const response = await fetch(info_url);
@@ -67,15 +74,15 @@
         id = data.id;
         if (summonerLevel >= 30) {
           rankinfo();
-          document.getElementById("rangasoloq").style.visibility = "visible";
-          document.getElementById("rangaflex").style.visibility = "visible";
+          //document.getElementById("rangasoloq").style.visibility = "visible";
+          //document.getElementById("flexq").style.display = "inline";
+          //document.getElementById("soloq").style.display = "inline";
 
-          document.getElementById("error").style.visibility = "hidden";
         } else if (summonerLevel < 30) {
-          document.getElementById("error").style.visibility = "visible";
-          document.getElementById("error").textContent = "Nie rozegrano gier rankingowych";
-          document.getElementById("rangasoloq").style.visibility = "hidden";
-          document.getElementById("rangaflex").style.visibility = "hidden";
+          document.getElementById("error").style.display = "inline";
+          document.getElementById("blad").textContent = "No rankeds played";
+          document.getElementById("soloqstats").style.display = "none";
+          document.getElementById("flexqstats").style.display = "none";
         }
 
       }
@@ -91,27 +98,30 @@
       const datalength = data.length;
       switch (datalength) {
         case 0:
-        document.getElementById("error").textContent = `Gracz ${name} nie rozegral gier Rankingowych`;
-        document.getElementById("error").style.visibility = "visible";
-        document.getElementById("rangasoloq").style.visibility = "hidden";
-        document.getElementById("rangaflex").style.visibility = "hidden";
+        document.getElementById("blad").textContent = `Summoner ${name} hasn't played ranked games`;
+        document.getElementById("error").style.display = "inline";
+        document.getElementById("soloqstats").style.display = "none";
+        document.getElementById("flexqstats").style.display = "none";
         break;
         case 1:
         var { tier, rank, leaguePoints, wins, losses } = data[0];
         //soloq
+        document.getElementById("soloqstats").style.display = "inline";
         document.getElementById("ranksoloq").textContent = tier+ " "+ rank;
         document.getElementById("lp").textContent = leaguePoints;
         document.getElementById("winy").textContent = wins;
         document.getElementById("losy").textContent = losses;
         var games = wins+losses;
         document.getElementById("wr").textContent = +Math.round(wins / games *100)+"%";
-        document.getElementById("error").textContent = `Gracz ${name} nie rozegral gier Flex`;
+        document.getElementById("blad").textContent = `Summoner ${name} hasn't played Flex Rankeds`;
         document.getElementById("error").style.visibility = "visible";
-        document.getElementById("rangaflex").style.visibility = "hidden";
+        document.getElementById("flexqstats").style.display = "none";
           break;
         case 2:
         var { tier, rank, leaguePoints, wins, losses } = data[0];
         //soloq
+        document.getElementById("soloqstats").style.display = "inline";
+        document.getElementById("flexqstats").style.display = "inline";
         document.getElementById("ranksoloq").textContent = tier+ " "+ rank;
         document.getElementById("lp").textContent = leaguePoints;
         document.getElementById("winy").textContent = wins;
