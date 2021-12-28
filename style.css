@@ -1,0 +1,15 @@
+body{
+  background-color: lightblue;
+}
+
+h1 {
+  color: purple;
+  text-align: center;
+  font-family: segoe ui;
+  font-weight: bolder;
+}
+
+p {
+  font-family: segoe ui;
+  font-size: 20;
+}

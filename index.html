@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>LOL API</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>League of Legends Stat checker</h1>
+    <p>
+    <input id="nickname" type="text">
+    <label for="server">Choose Server:</label>
+    <select name="server" id="server">
+      <option value="eun1">EUNE</option>
+      <option value="euw1">EUW</option>
+      <option value="na1">NA</option>
+      <option value="la1">LAN</option>
+      <option value="la2">LAS</option>
+      <option value="kr">Korea</option>
+      <option value="tr1">Turkey</option>
+    </select>
+    <input type="submit" onclick="getinfo()" value="Search for Summoner"><br>
+    </p>
+    <p id="informacje" style="visibility: hidden">
+      <span><img id="icon" src=""></span><br>
+      Nickname: <span id="summonername"></span><br>
+      Account Level: <span id="level"></span><br>
+    </p>
+    <p id="error" style="visibility: hidden">
+      <span id="blad"></span>
+    </p>
+    <p id="ranga" style="visibility: hidden">
+      <b>Solo Queue</b><br>
+      Rank: <span id="ranksoloq"></span><br>
+      LP: <span id="lp"></span><br>
+      Wins: <span id="winy"></span> Losses:<span id="losy"></span><br>
+      Win ratio: <span id="wr"></span><br>
+      <b>Flex Queue</b><br>
+      Rank: <span id="rankflex"></span><br>
+      LP: <span id="lpflex"></span><br>
+      Wins: <span id="winyflex"></span> Losses:<span id="losyflex"></span><br>
+      Win ratio: <span id="wrflex"></span>
+    </p>
+
+    <script>
+    const apikey = "RGAPI-268b3e2b-d319-42c6-9717-8e9de168c0e2";
+    var id;
+    var server;
+        async function getinfo() {
+          var nick = document.getElementById("nickname").value;
+          server = document.getElementById('server').value;
+
+        var info_url = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${nick}?api_key=${apikey}`;
+        const response = await fetch(info_url);
+        const data = await response.json();
+        var { name, profileIconId, summonerLevel } = data;
+        document.getElementById("icon").src = "https://ddragon.leagueoflegends.com/cdn/11.24.1/img/profileicon/" + profileIconId + ".png"
+        document.getElementById("summonername").textContent = name;
+        document.getElementById("level").textContent = summonerLevel;
+        document.getElementById("informacje").style.visibility = "visible";
+        id = data.id;
+        if (summonerLevel >= 30) {
+          rankinfo();
+          document.getElementById("ranga").style.visibility = "visible";
+          document.getElementById("error").style.visibility = "hidden";
+        } else if (summonerLevel < 30) {
+          document.getElementById("error").style.visibility = "visible";
+          document.getElementById("error").textContent = "Nie rozegrano gier rankingowych";
+          document.getElementById("ranga").style.visibility = "hidden";
+        }
+
+      }
+
+      async function rankinfo() {
+        var serv = server;
+        var idu = id;
+      var rank_url = `https://${serv}.api.riotgames.com/lol/league/v4/entries/by-summoner/${idu}?api_key=${apikey}`
+      const response = await fetch(rank_url);
+      const data = await response.json();
+      var { tier, rank, leaguePoints, wins, losses } = data[0];
+      var tier1 = data[1].tier;
+      var rank1 = data[1].rank;
+      var leaguePoints1 = data[1].leaguePoints;
+      var wins1 = data[1].wins;
+      var losses1 = data[1].losses;
+
+      //soloq
+      document.getElementById("ranksoloq").textContent = tier+ " "+ rank;
+      document.getElementById("lp").textContent = leaguePoints;
+      document.getElementById("winy").textContent = wins;
+      document.getElementById("losy").textContent = losses;
+      var games = wins+losses;
+      document.getElementById("wr").textContent = +Math.round(wins / games *100)+"%";
+      //flexq
+      document.getElementById("rankflex").textContent = tier1+ " "+ rank1;
+      document.getElementById("lpflex").textContent = leaguePoints1;
+      document.getElementById("winyflex").textContent = wins1;
+      document.getElementById("losyflex").textContent = losses1;
+      var gamesflex = wins1+losses1;
+      document.getElementById("wrflex").textContent = +Math.round(wins1 / gamesflex *100)+"%";
+
+      }
+
+      </script>
+  </body>
+</html>
