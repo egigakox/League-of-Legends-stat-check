@@ -1,5 +1,6 @@
 body{
   background-color: lightblue;
+  text-align: center;
 }
 
 h1 {
@@ -18,12 +19,35 @@ background-color: #FF0000;
 padding: 10px 15px 8px 15px;
 line-height: 120%;
 }
+.form {
+  display: inline-block;
+  position: absolute;
+  left: 37%;
+}
+.informacje {
+  display: inline-block;
+  position: absolute;
+  left: 43%;
+  top: 20%;
+}
 .soloqstats {
 display: none;
+position: absolute;
+top: 60%;
+left: 50%;
+transform: translate(-50%, -50%);
 }
 .flexqstats {
 display: none;
+position: absolute;
+top: 60%;
+left: 50%;
+transform: translate(-50%, 55%);
 }
 .error {
   display: none;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

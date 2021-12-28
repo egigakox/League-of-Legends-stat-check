@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <title>LOL API</title>
     <link rel="stylesheet" href="style.css">
-<div class="div-1" ><center><strong>WARNING: App can give inaccurate data when you have played only flex rankeds.</strong></center></div>
+<!-- <div class="div-1" ><center><strong>WARNING: App can give inaccurate data when you have played only flex rankeds.</strong></center></div> -->
 
   </head>
   <body>
     <h1>League of Legends Stat checker</h1>
-    <p>
+    <div class="form">
     <input id="nickname" type="text">
     <label for="server">Choose Server:</label>
     <select name="server" id="server">
@@ -22,12 +22,12 @@
       <option value="tr1">Turkey</option>
     </select>
     <input type="submit" onclick="getinfo()" value="Search for Summoner"><br>
-    </p>
-    <p id="informacje" style="visibility: hidden">
+  </div>
+    <div class="informacje" id="informacje" style="visibility: hidden">
       <span><img id="icon" src=""></span><br>
-      Nickname: <span id="summonername"></span><br>
+      <font align="center">Nickname: <span id="summonername"></span></font><br>
       Account Level: <span id="level"></span><br>
-    </p>
+    </div>
 
 
     <div class="soloqstats" id="soloqstats">
@@ -48,9 +48,8 @@
       Wins: <span id="winyflex"></span> Losses:<span id="losyflex"></span><br>
       Win ratio: <span id="wrflex"></span>
   </div>
-
     <script>
-    const apikey = "RGAPI-b3cf6645-60c2-494b-9f56-2c431c751bea";
+    const apikey = "RGAPI-949d314e-e437-4dba-ac7e-72d75d3631fb";
     var id;
     var server;
     var nick;
@@ -79,8 +78,9 @@
           //document.getElementById("soloq").style.display = "inline";
 
         } else if (summonerLevel < 30) {
-          document.getElementById("error").style.display = "inline";
-          document.getElementById("blad").textContent = "No rankeds played";
+          //document.getElementById("error").style.display = "inline";
+          //document.getElementById("blad").textContent = "No rankeds played";
+          swal("Error", `Summoner ${name} is under 30 level \n He can't play rankeds`, "error");
           document.getElementById("soloqstats").style.display = "none";
           document.getElementById("flexqstats").style.display = "none";
         }
@@ -98,8 +98,9 @@
       const datalength = data.length;
       switch (datalength) {
         case 0:
-        document.getElementById("blad").textContent = `Summoner ${name} hasn't played ranked games`;
-        document.getElementById("error").style.display = "inline";
+        //document.getElementById("blad").textContent = `Summoner ${name} hasn't played ranked games`;
+        //document.getElementById("error").style.display = "inline";
+        swal("Error", `Summoner ${name} hasn't played ranked games`, "error");
         document.getElementById("soloqstats").style.display = "none";
         document.getElementById("flexqstats").style.display = "none";
         break;
@@ -113,8 +114,9 @@
         document.getElementById("losy").textContent = losses;
         var games = wins+losses;
         document.getElementById("wr").textContent = +Math.round(wins / games *100)+"%";
-        document.getElementById("blad").textContent = `Summoner ${name} hasn't played Flex Rankeds`;
-        document.getElementById("error").style.visibility = "visible";
+        //document.getElementById("blad").textContent = `Summoner ${name} hasn't played Flex Rankeds`;
+        //document.getElementById("error").style.visibility = "visible";
+        swal("Error", `Summoner ${name} hasn't played Flex Rankeds`, "error");
         document.getElementById("flexqstats").style.display = "none";
           break;
         case 2:
@@ -146,5 +148,7 @@
       }
 
       </script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
   </body>
 </html>
