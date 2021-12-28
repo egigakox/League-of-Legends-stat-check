@@ -4,10 +4,15 @@
     <meta charset="utf-8">
     <title>LOL API</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="alert.css">
 <!-- <div class="div-1" ><center><strong>WARNING: App can give inaccurate data when you have played only flex rankeds.</strong></center></div> -->
 
   </head>
   <body>
+    <div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  WARNING: App can give inaccurate data when you have played only flex rankeds
+</div>
     <h1>League of Legends Stat checker</h1>
     <div class="form">
     <input id="nickname" type="text">
@@ -49,7 +54,7 @@
       Win ratio: <span id="wrflex"></span>
   </div>
     <script>
-    const apikey = "RGAPI-";
+    const apikey = "RGAPI-949d314e-e437-4dba-ac7e-72d75d3631fb";
     var id;
     var server;
     var nick;
