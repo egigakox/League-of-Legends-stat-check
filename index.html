@@ -11,7 +11,7 @@
   <body>
     <div class="alert">
   <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-  WARNING: App can give inaccurate data when you have played only flex rankeds 
+  WARNING: App can give inaccurate data when you have played only flex rankeds
 </div>
     <h1>League of Legends Stat checker</h1>
     <div class="form">
@@ -53,106 +53,7 @@
       Wins: <span id="winyflex"></span> Losses:<span id="losyflex"></span><br>
       Win ratio: <span id="wrflex"></span>
   </div>
-    <script>
-    const apikey = "RGAPI-";
-    var id;
-    var server;
-    var nick;
-        async function getinfo() {
-          nick = document.getElementById("nickname").value;
-          server = document.getElementById('server').value;
-          //koks
-          document.getElementById("error").style.display = "none";
-          document.getElementById("soloqstats").style.display = "none";
-          document.getElementById("flexqstats").style.display = "none";
-
-
-        var info_url = `https://${server}.api.riotgames.com/lol/summoner/v4/summoners/by-name/${nick}?api_key=${apikey}`;
-        const response = await fetch(info_url);
-        const data = await response.json();
-        var { name, profileIconId, summonerLevel } = data;
-        document.getElementById("icon").src = "https://ddragon.leagueoflegends.com/cdn/11.24.1/img/profileicon/" + profileIconId + ".png"
-        document.getElementById("summonername").textContent = name;
-        document.getElementById("level").textContent = summonerLevel;
-        document.getElementById("informacje").style.visibility = "visible";
-        id = data.id;
-        if (summonerLevel >= 30) {
-          rankinfo();
-          //document.getElementById("rangasoloq").style.visibility = "visible";
-          //document.getElementById("flexq").style.display = "inline";
-          //document.getElementById("soloq").style.display = "inline";
-
-        } else if (summonerLevel < 30) {
-          //document.getElementById("error").style.display = "inline";
-          //document.getElementById("blad").textContent = "No rankeds played";
-          swal("Error", `Summoner ${name} is under 30 level \n He can't play rankeds`, "error");
-          document.getElementById("soloqstats").style.display = "none";
-          document.getElementById("flexqstats").style.display = "none";
-        }
-
-      }
-
-      async function rankinfo() {
-        var serv = server;
-        var idu = id;
-        var name = nick;
-      var rank_url = `https://${serv}.api.riotgames.com/lol/league/v4/entries/by-summoner/${idu}?api_key=${apikey}`
-      const response = await fetch(rank_url);
-      const data = await response.json();
-
-      const datalength = data.length;
-      switch (datalength) {
-        case 0:
-        //document.getElementById("blad").textContent = `Summoner ${name} hasn't played ranked games`;
-        //document.getElementById("error").style.display = "inline";
-        swal("Error", `Summoner ${name} hasn't played ranked games`, "error");
-        document.getElementById("soloqstats").style.display = "none";
-        document.getElementById("flexqstats").style.display = "none";
-        break;
-        case 1:
-        var { tier, rank, leaguePoints, wins, losses } = data[0];
-        //soloq
-        document.getElementById("soloqstats").style.display = "inline";
-        document.getElementById("ranksoloq").textContent = tier+ " "+ rank;
-        document.getElementById("lp").textContent = leaguePoints;
-        document.getElementById("winy").textContent = wins;
-        document.getElementById("losy").textContent = losses;
-        var games = wins+losses;
-        document.getElementById("wr").textContent = +Math.round(wins / games *100)+"%";
-        //document.getElementById("blad").textContent = `Summoner ${name} hasn't played Flex Rankeds`;
-        //document.getElementById("error").style.visibility = "visible";
-        swal("Error", `Summoner ${name} hasn't played Flex Rankeds`, "error");
-        document.getElementById("flexqstats").style.display = "none";
-          break;
-        case 2:
-        var { tier, rank, leaguePoints, wins, losses } = data[0];
-        //soloq
-        document.getElementById("soloqstats").style.display = "inline";
-        document.getElementById("flexqstats").style.display = "inline";
-        document.getElementById("ranksoloq").textContent = tier+ " "+ rank;
-        document.getElementById("lp").textContent = leaguePoints;
-        document.getElementById("winy").textContent = wins;
-        document.getElementById("losy").textContent = losses;
-        var games = wins+losses;
-        document.getElementById("wr").textContent = +Math.round(wins / games *100)+"%";
-        var tier1 = data[1].tier;
-        var rank1 = data[1].rank;
-        var leaguePoints1 = data[1].leaguePoints;
-        var wins1 = data[1].wins;
-        var losses1 = data[1].losses;
-        //flexq
-        document.getElementById("rankflex").textContent = tier1+ " "+ rank1;
-        document.getElementById("lpflex").textContent = leaguePoints1;
-        document.getElementById("winyflex").textContent = wins1;
-        document.getElementById("losyflex").textContent = losses1;
-        var gamesflex = wins1+losses1;
-        document.getElementById("wrflex").textContent = +Math.round(wins1 / gamesflex *100)+"%";
-        break;
-      }
-
-      }
-
-      </script>
+    <script src="api.js"></script>
       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
   </body>

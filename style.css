@@ -6,7 +6,7 @@ body{
 h1 {
   color: purple;
   text-align: center;
-  font-family: Helvetica;
+  font-family: Helvetica, -apple-system;
   font-weight: bolder;
 }
 
@@ -14,11 +14,7 @@ p {
   font-family: Helvetica;
   font-size: 20;
 }
-.div-1 {
-background-color: #FF0000;
-padding: 10px 15px 8px 15px;
-line-height: 120%;
-}
+
 .form {
   display: inline-block;
   position: absolute;
@@ -29,13 +25,16 @@ line-height: 120%;
   position: absolute;
   left: 43%;
   top: 20%;
+  font-family: 'Segoe UI', -apple-system;
 }
 .soloqstats {
 display: none;
 position: absolute;
 top: 60%;
 left: 50%;
-transform: translate(-50%, -50%);
+  font-family: 'Segoe UI', -apple-system;
+  transform: translate(-50%, -50%);
+  margin-top: 10px;
 }
 .flexqstats {
 display: none;
@@ -43,6 +42,8 @@ position: absolute;
 top: 60%;
 left: 50%;
 transform: translate(-50%, 55%);
+font-family: 'Segoe UI', -apple-system;
+
 }
 .error {
   display: none;
